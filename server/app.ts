@@ -1,9 +1,13 @@
 //Import express
 import express from 'express';
-import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
-import { getDir } from './util/getDir.ts'; // TODO TODO 에러나고 있음
+import requestIp from 'request-ip';
+import { getDir } from './util/getDir.ts';
+import router from './routes/v1Routes.ts';
+import uiRouter from './routes/uiRoutes.ts';
+
+const API_VERSION = '/v1';
 
 dotenv.config({
     // path: `${path.join(`${__dirname}/..`)}/.env`,
@@ -15,9 +19,6 @@ const app = express();
 
 // Set the port used for server traffic.
 const port = process.env.PORT || 3000;
-
-// Middleware to serve static files from 'public' directory
-app.use(express.static('public')); // 현재 보여주고 있는 정적 파일.
 
 //Step 3 code goes here
 //Initialize file system module
@@ -32,13 +33,31 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
-// API endpoint to get list of songs
-app.get('/songs', (req, res) => {
-    fs.readdir('songs', (err, files) => {
-        if (err) {
-            res.status(500).send('Error reading song files');
-        } else {
-            res.json({ files });
-        }
-    });
+// log
+app.use((req, res, next) => {
+    const ip = requestIp.getClientIp(req);
+    console.log(`${ip} ${req.method} ${req.path}`);
+    const isApi = req.path.startsWith(API_VERSION);
+    if (Object.keys(req.params).length !== 0) {
+        // 여기에서는 req.params가 없음. 라우팅 된 곳에 있음.
+        console.log(
+            `REQ PARAMS ${JSON.stringify(req.params)?.substring(0, 5000)}`,
+        );
+    }
+    if (Object.keys(req.query).length !== 0) {
+        console.log(
+            `REQ QUERY ${JSON.stringify(req.query)?.substring(0, 5000)}`,
+        );
+    }
+    if (isApi && Object.keys(req.body).length !== 0) {
+        console.log(`REQ BODY ${JSON.stringify(req.body)?.substring(0, 5000)}`);
+    }
+    next();
 });
+
+// Middleware to serve static files from 'public' directory
+app.use(express.static('public'));
+app.use('/', uiRouter);
+
+// API Routes
+app.use(API_VERSION, router);
