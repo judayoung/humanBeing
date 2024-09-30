@@ -8,6 +8,33 @@
     </head>
     <body>
         <main></main>
+        <div>
+            <button id="start" onclick="">눌러서 데이터 가져오기</button>
+            <div id="data"></div>
+        </div>
         <script src="sketch.js"></script>
+        <script>
+            // Fetch and insert header
+            fetch('ui/components/header.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document
+                        .querySelector('main')
+                        .insertAdjacentHTML('afterbegin', data);
+                })
+                .catch((error) =>
+                    console.error('Error fetching header:', error),
+                );
+
+            document.getElementById('start').onclick = function () {
+                fetch('http://localhost:10200/songs')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        document.getElementById('data').innerHTML =
+                            JSON.stringify(data, null, 2);
+                    });
+            };
+        </script>
     </body>
 </html>
