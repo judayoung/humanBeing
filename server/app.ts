@@ -14,10 +14,10 @@ dotenv.config({
 const app = express();
 
 // Set the port used for server traffic.
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to serve static files from 'public' directory
-app.use(express.static('public'));
+app.use(express.static('public')); // 현재 보여주고 있는 정적 파일.
 
 //Step 3 code goes here
 //Initialize file system module
