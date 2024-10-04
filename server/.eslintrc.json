@@ -33,5 +33,14 @@
         "function-paren-newline": "warn",
         "no-case-declarations": "off",
         "no-nested-ternary": "off"
-    }
+    },
+    "overrides": [
+        {
+            "files": ["/server/public/sketch.js"],
+            "rules": {
+                "no-unused-vars": "off",
+                "no-undef": "off"
+            }
+        }
+    ]
 }
