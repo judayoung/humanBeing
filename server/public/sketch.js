@@ -26,7 +26,7 @@ function draw() {
     const division = 10;
     const divisionWidth = canvasWidth / division;
     const divisionHeight = canvasHeight / division;
-    console.log('divisionHeight', divisionHeight);
+    // console.log('divisionHeight', divisionHeight);
 
     // 전체 캔버스 높이를 division으로 나누어서 점을 찍는다.
     const pointColor = 'gray';
