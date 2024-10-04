@@ -3,6 +3,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import requestIp from 'request-ip';
+import livereload from 'livereload';
+import livereloadMiddleware from 'connect-livereload';
 import { getDir } from './util/getDir.ts';
 import router from './routes/v1Routes.ts';
 import uiRouter from './routes/uiRoutes.ts';
@@ -14,6 +16,15 @@ dotenv.config({
     // path: `${path.join(`${__dirname}/..`)}/.env`,
     path: path.join(`${getDir()}/../.env`),
 });
+
+// 라이브 서버 설정
+const liveServer = livereload.createServer({
+    // 변경시 다시 로드할 파일 확장자들 설정
+    exts: ['html', 'css', 'ejs'],
+    debug: true,
+});
+
+liveServer.watch(getDir());
 
 // Create the Express app
 const app = express();
@@ -34,6 +45,9 @@ app.listen(port, () => {
     logger().info(`Server running at http://localhost:${port}`);
 });
 
+// 미들웨어 설정
+app.use(livereloadMiddleware());
+
 // API logging
 app.use((req, res, next) => {
     const ip = requestIp.getClientIp(req);
@@ -50,7 +64,7 @@ app.use((req, res, next) => {
             `REQ QUERY ${JSON.stringify(req.query)?.substring(0, 5000)}`,
         );
     }
-    if (isApi && Object.keys(req.body).length !== 0) {
+    if (isApi && req.body && Object.keys(req.body).length !== 0) {
         logger().info(
             `REQ BODY ${JSON.stringify(req.body)?.substring(0, 5000)}`,
         );

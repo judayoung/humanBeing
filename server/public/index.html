@@ -4,12 +4,24 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" href="main.css" />
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
         <div id="app">
-            <div id="header">
-            <main></main> <!-- sketch.js -->
+            <div id="header"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <!-- sketch.js -->
+                        <main></main>
+                    </div>
+                    <div class="col">
+                        <span>body profile1 라이브 코딩 히히</span>
+                    </div>
+                </div>
+            </div>
             <div>
                 <button id="start" onclick="">눌러서 데이터 가져오기</button>
                 <div id="data"></div>
