@@ -1,0 +1,18 @@
+{
+    "human": {
+        "gender": "MALE",
+        "birth": "1986-01-01",
+        "race": "YELLOW"
+    },
+    "physical_log": [
+        {
+            "time": "2024-09-12 09:31:00.000",
+            "data": {
+                "height": 178,
+                "weight": 85,
+                "skeletal_muscle": 41.1,
+                "body_fat": 14.7
+            }
+        }
+    ]
+}

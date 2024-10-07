@@ -6,6 +6,11 @@ let font;
 const canvasWidth = 400;
 const canvasHeight = 600;
 
+const division = 10;
+const divisionWidth = canvasWidth / division;
+const divisionHeight = canvasHeight / division;
+const pointColor = 'gray';
+
 function preload() {
     font = loadFont('/font/Inconsolata.otf');
 }
@@ -20,16 +25,13 @@ function setup() {
 - setup() 함수를 초당 60회씩 프로그램이 중지되거나 noLoop() 함수가 호출될 때까지 직접 호출되어 
 */
 function draw() {
+    const userData = document.getElementById('user_data').innerText;
+    // console.log('userData', userData);
+
     const backgroundColor = color(135, 206, 235, 255);
     background(backgroundColor);
 
-    const division = 10;
-    const divisionWidth = canvasWidth / division;
-    const divisionHeight = canvasHeight / division;
-    // console.log('divisionHeight', divisionHeight);
-
     // 전체 캔버스 높이를 division으로 나누어서 점을 찍는다.
-    const pointColor = 'gray';
     fill(pointColor);
     textFont(font);
     textSize(20);
