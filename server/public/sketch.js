@@ -3,8 +3,8 @@
 
 */
 let font;
-const canvasWidth = 400;
-const canvasHeight = 600;
+const canvasWidth = 600; // 1
+const canvasHeight = 900; // 1.5
 
 const division = 10;
 const divisionWidth = canvasWidth / division;
@@ -25,8 +25,10 @@ function setup() {
 - setup() 함수를 초당 60회씩 프로그램이 중지되거나 noLoop() 함수가 호출될 때까지 직접 호출되어 
 */
 function draw() {
-    const userData = document.getElementById('user_data').innerText;
+    const userData = JSON.parse(document.getElementById('user_data').innerText);
     // console.log('userData', userData);
+    const isMale = userData.human.gender === 'MALE';
+    const { data } = userData.physical_log[userData.physical_log.length - 1];
 
     const backgroundColor = color(135, 206, 235, 255);
     background(backgroundColor);
@@ -48,16 +50,39 @@ function draw() {
         }
     }
 
+    // 데이터를 표시한다.
+    textSize(20);
+    for (let i = 0; i < division + 1; i++) {
+        const y = 0 - canvasHeight / 2 + 50 * i;
+        const x = 0 - canvasWidth / 2 + 30 * 1;
+
+        switch (i) {
+            case 1:
+                text('height: ' + data.height, x, y);
+                break;
+            case 2:
+                text('weight: ' + data.weight, x, y);
+                break;
+            case 3:
+                text('skeletal_muscle: ' + data.skeletal_muscle, x, y);
+                break;
+            case 4:
+                text('body_fat: ' + data.body_fat, x, y);
+                break;
+        }
+    }
+
+    // 몸을 그린다.
     const skinColor = color(255, 213, 196);
     fill(skinColor);
 
     const headY = 0 - canvasHeight / 2 + divisionHeight * 1.5; // 1.5 번째 높이의 점
     const headHeight = divisionHeight;
-    const neckWidth = divisionWidth / 2.5;
+    const neckWidth = isMale ? divisionWidth / 2 : divisionWidth / 2.5;
     const neckHeight = divisionHeight / 3;
-    const upperBodyWidth = divisionWidth * 2;
+    const upperBodyWidth = isMale ? divisionWidth * 2.5 : divisionWidth * 2;
     const upperBodyHeight = divisionHeight * 2.5;
-    const groinWidth = divisionWidth * 2.2;
+    const groinWidth = isMale ? divisionWidth * 2 : divisionWidth * 2.2;
     const groinHeight = divisionHeight * 1;
     const legWidth = divisionWidth * 0.85;
     // 전체 divisionHeight * 8에서 headHeight, neckHeight, upperBodyHeight, groinHeight를 뺀다.
@@ -70,9 +95,7 @@ function draw() {
     const armWidth = divisionWidth * 0.5;
     const armHeight = divisionHeight * 3;
     const armAngle = (2 * PI) / 16;
-
-    // 몸이 이어지게 그린다.
-    const head = circle(0, headY, headHeight); //
+    const head = circle(0, headY, headHeight);
     const neck = rect(
         0 - neckWidth / 2,
         headY + divisionHeight / 2,
