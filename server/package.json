@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "type": "module",
     "description": "",
-    "main": "server/app.ts",
+    "main": "app.ts",
     "scripts": {
         "start": "nodemon",
-        "build": "tsc -p server/tsconfig.json",
+        "build": "tsc -p tsconfig.json",
         "test": "npm run test"
     },
     "author": "joodevact@gmail.com",

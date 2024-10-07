@@ -20,7 +20,7 @@ dotenv.config({
 // 라이브 서버 설정
 const liveServer = livereload.createServer({
     // 변경시 다시 로드할 파일 확장자들 설정
-    exts: ['html', 'css', 'ejs'],
+    exts: ['html', 'css', 'ejs', 'js'],
     debug: true,
 });
 
